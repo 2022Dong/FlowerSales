@@ -4,14 +4,14 @@ namespace FlowerSales.Models
 {
     public class ShopContext: DbContext
     {
-        public ShopContext(DbContextOptions<ShopContext> options) { }
+        public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>()
-                .HasMany(c => c.Products)
-                .WithOne(c => c.Category)
-                .HasForeignKey(a => a.CategoryId);
+                .HasMany(flowers => flowers.Products)
+                .WithOne(a => a.Category)
+                .HasForeignKey(fk => fk.CategoryId);
 
             modelBuilder.Seed(); // ModelBuilderExtensions.cs
         }
