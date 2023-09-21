@@ -15,7 +15,9 @@
         public int Page { get; set; } = 1;
 
         // for sorting
-        private string _sortOrder = "asc";
+        public string SortBy { get; set; } = "ProductId"; // can short any attributes.
+
+        private string _sortOrder = "asc"; // default
         public string SortOrder
         {
             get { return _sortOrder; }
@@ -24,6 +26,6 @@
                 if (value == "asc" || value == "desc") { _sortOrder = value; }
             }
         }
-        public string SortBy { get; set; } = "ProductId";
+        
     }
 }

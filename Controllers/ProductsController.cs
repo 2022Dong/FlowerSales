@@ -77,6 +77,16 @@ namespace FlowerSales.Controllers
                 products = products.Where(
                     p => p.PostCode == queryParameters.PostCode.Value);
             }
+            // Sorting
+            if (!string.IsNullOrEmpty(queryParameters.SortBy))
+            {
+                if (typeof(Product).GetProperty(queryParameters.SortBy) != null)
+                {
+                    products = products.OrderByCustom(  // the method is added within IQueryableExtentions.cs
+                        queryParameters.SortBy,
+                        queryParameters.SortOrder);
+                }
+            }
             // pagination 
             products = products.Skip(queryParameters.Size * (queryParameters.Page - 1)).Take(queryParameters.Size);
 
