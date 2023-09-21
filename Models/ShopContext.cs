@@ -4,7 +4,7 @@ namespace FlowerSales.Models
 {
     public class ShopContext: DbContext
     {
-        public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
+        public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }  // Missing " : base(options)" -- Took me hrs to find the bug.
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

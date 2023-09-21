@@ -43,13 +43,13 @@ namespace FlowerSales.Controllers
         //    return Ok((_shopContext.Products.Find(id) != null)? _shopContext.Products.Find(id): NotFound("The id doesn't exist!"));
         //}
 
-        [HttpGet, Route("api/[controller]")]
+        [HttpGet, Route("/ReadAllProducts")]
         public async Task<ActionResult> GetProduct()  // 1.e. Making all calls to your API Async
         {
             return Ok(await _shopContext.Products.ToListAsync());
         }
 
-        [HttpGet, Route("/products/{id}")]
+        [HttpGet, Route("/ReadOneProductById")]
         public async Task<ActionResult> GetProduct(int id)
         {
             // 1d. Error handling
@@ -57,31 +57,63 @@ namespace FlowerSales.Controllers
                 _shopContext.Products.Find(id) : NotFound("The id doesn't exist!"));
         }
 
-        [HttpPost] // 1.f. Write data using HTTP methods.
-        public async Task<ActionResult> PostProduct (Product product)
+        [HttpPost, Route("/AddProduct")] // 1.f. Write data using HTTP methods.
+        public async Task<ActionResult> PostProduct(Product product)
         {
             _shopContext.Products.Add(product);
             await _shopContext.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new {id = product.ProductId }, product);
+            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
         }
 
-        [HttpPut("{id}")] // 1.h. Update one record using the PUT method.
+        [HttpPut, Route("/UpdateOneId")] // 1.h. Update one record using the PUT method.
         public async Task<ActionResult> PutProduct(int id, Product product)
         {
-            if(id != product.ProductId) { return BadRequest("id != product.ProductId"); }
+            if (id != product.ProductId) { return BadRequest("id != product.ProductId"); }
 
             _shopContext.Entry(product).State = EntityState.Modified; // updating data
 
             try { await _shopContext.SaveChangesAsync(); }
-            catch(DbUpdateConcurrencyException ex) // data already have been modidied
-            { 
-                if(!_shopContext.Products.Any(p => p.ProductId == id)) { return NotFound(); }
+            catch (DbUpdateConcurrencyException ex) // data already have been modidied
+            {
+                if (!_shopContext.Products.Any(p => p.ProductId == id)) { return NotFound(); }
                 else { throw ex; }
             }
             return NoContent();
         }
 
+        [HttpDelete, Route("/DeleteOneId")] // 1.i. Delete one or many records using DELETE.
+        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        {
+            Product product = await _shopContext.Products.FindAsync(id);
+            if (product != null)
+            {
+                return NotFound();
+            }
 
+            _shopContext.Products.Remove(product);
+            await _shopContext.SaveChangesAsync();
+
+            return product;
+        }
+
+        [HttpDelete, Route("/DeleteMultipleIds")]
+        public async Task<ActionResult<Product>> DeleteProducts([FromQuery] int[] ids)
+        {
+            List<Product> products = new List<Product>();
+            foreach (int id in ids)
+            {
+                Product product = await _shopContext.Products.FindAsync(id);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+                products.Add(product);
+            }
+            _shopContext.Products.RemoveRange(products);
+            await _shopContext.SaveChangesAsync();
+
+            return Ok(products);
+        }
     }
 }
