@@ -25,7 +25,6 @@
             {
                 if (value == "asc" || value == "desc") { _sortOrder = value; }
             }
-        }
-        
+        }        
     }
 }

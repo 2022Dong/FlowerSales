@@ -66,6 +66,7 @@ namespace FlowerSales.Controllers
                 products = products.Where(
                     p => p.ProductName.ToLower().Contains(queryParameters.ProductName.ToLower())); ;
             }
+            // Search multiple fields
             if (!string.IsNullOrEmpty(queryParameters.SearchProductOrLocation))
             {
                 products = products.Where(
