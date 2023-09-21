@@ -44,11 +44,33 @@ namespace FlowerSales.Controllers
         //}
 
         [HttpGet, Route("/ReadAllProducts")]
-        public async Task<ActionResult> GetProduct()  // 1.e. Making all calls to your API Async
+        public async Task<ActionResult> GetProduct([FromQuery] ProductQueryParameters queryParameters)
         {
-            return Ok(await _shopContext.Products.ToListAsync());
-        }
 
+            IQueryable<Product> products = _shopContext.Products;
+            // filter
+            if (queryParameters.MaxPrice != null)
+            {
+                products = products.Where(
+                    p => p.Price <= queryParameters.MaxPrice.Value);
+            }
+            if (queryParameters.MinPrice != null)
+            {
+                products = products.Where(
+                    p => p.Price >= queryParameters.MinPrice.Value);
+            }
+            // IsAvialable...
+            //...
+            // pagination 
+            products = products.Skip(queryParameters.Size * (queryParameters.Page - 1)).Take(queryParameters.Size);
+
+            return Ok(await products.ToListAsync());
+        }
+        //[HttpGet, Route("/ReadAllProducts")]
+        //public async Task<ActionResult> GetProduct()  // 1.e. Making all calls to your API Async
+        //{
+        //    return Ok(await _shopContext.Products.ToListAsync());
+        //}
         [HttpGet, Route("/ReadOneProductById")]
         public async Task<ActionResult> GetProduct(int id)
         {
