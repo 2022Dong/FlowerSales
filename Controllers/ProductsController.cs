@@ -59,8 +59,24 @@ namespace FlowerSales.Controllers
                 products = products.Where(
                     p => p.Price >= queryParameters.MinPrice.Value);
             }
-            // IsAvialable...
+            // IsAvialable... No need to modify.
             //...
+            if(!string.IsNullOrEmpty(queryParameters.ProductName))
+            {
+                products = products.Where(
+                    p => p.ProductName.ToLower().Contains(queryParameters.ProductName.ToLower())); ;
+            }
+            if (!string.IsNullOrEmpty(queryParameters.SearchProductOrLocation))
+            {
+                products = products.Where(
+                    p => p.ProductName.ToLower().Contains(queryParameters.SearchProductOrLocation.ToLower()) ||
+                        p.StoreLocation.ToLower().Contains(queryParameters.SearchProductOrLocation.ToLower()));
+            }
+            if (queryParameters.PostCode != null)
+            {
+                products = products.Where(
+                    p => p.PostCode == queryParameters.PostCode.Value);
+            }
             // pagination 
             products = products.Skip(queryParameters.Size * (queryParameters.Page - 1)).Take(queryParameters.Size);
 
