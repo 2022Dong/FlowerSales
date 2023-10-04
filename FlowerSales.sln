@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowerSales", "FlowerSales.csproj", "{93E7C317-2B4A-464A-A557-144C153DC40C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlowerSalesApi", "FlowerSalesApi.csproj", "{93E7C317-2B4A-464A-A557-144C153DC40C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowerSales_Web_App", "..\FlowerSales_Web_App\FlowerSales_Web_App.csproj", "{A143C280-054E-4E2F-842C-978166570B75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{93E7C317-2B4A-464A-A557-144C153DC40C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93E7C317-2B4A-464A-A557-144C153DC40C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93E7C317-2B4A-464A-A557-144C153DC40C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A143C280-054E-4E2F-842C-978166570B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A143C280-054E-4E2F-842C-978166570B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A143C280-054E-4E2F-842C-978166570B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A143C280-054E-4E2F-842C-978166570B75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
