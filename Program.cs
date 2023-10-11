@@ -1,6 +1,9 @@
 using FlowerSales.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +20,9 @@ builder.Services.AddApiVersioning(options =>
     options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
     options.AssumeDefaultVersionWhenUnspecified = true;
 
-    options.ApiVersionReader = new HeaderApiVersionReader("SMTAFE-API-version");
-    //options.ApiVersionReader = new HeaderApiVersionReader("X-API-version");
+    options.ApiVersionReader = new QueryStringApiVersionReader("SMTAFE-API-version");
+
+    //options.ApiVersionReader = new HeaderApiVersionReader("SMTAFE-API-version");
 });
 
 builder.Services.AddVersionedApiExplorer(options =>
