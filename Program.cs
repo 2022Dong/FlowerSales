@@ -31,12 +31,12 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
-// Enable CORS
+// Enable CORS...
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("https://localhost:7046")
+        builder.WithOrigins("https://localhost:7019")
         .WithHeaders("SMTAFE-API-version");
     });
 });
@@ -63,7 +63,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseCors();
+app.UseCors(); //  Enable CORS...
 
 app.MapControllers();
 
