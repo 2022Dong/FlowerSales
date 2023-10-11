@@ -119,7 +119,7 @@ namespace FlowerSales.Controllers
             return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
         }
 
-        [HttpPut, Route("/UpdateOneId")] // 1.h. Update one record using the PUT method.
+        [HttpPut, Route("/UpdateById")] // 1.h. Update one record using the PUT method.
         public async Task<ActionResult> PutProduct(int id, Product product)
         {
             if (id != product.ProductId) { return BadRequest("id != product.ProductId"); }
