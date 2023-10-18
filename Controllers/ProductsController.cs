@@ -63,12 +63,27 @@ namespace FlowerSales.Controllers
                 products = products.Where(
                     p => p.Price >= queryParameters.MinPrice.Value);
             }
-            // IsAvialable... No need to modify.
+            // IsAvialable... No need to modify. ? - WebApp calls is needed.
             //...
-            if(!string.IsNullOrEmpty(queryParameters.ProductName))
+            if (queryParameters.IsAvialable == true)
+            {
+                products = products.Where(
+                    p => p.IsAvailable == true);
+            }
+            if (queryParameters.IsAvialable == false)
+            {
+                products = products.Where(
+                    p => p.IsAvailable == false);
+            }
+            if (!string.IsNullOrEmpty(queryParameters.ProductName))
             {
                 products = products.Where(
                     p => p.ProductName.ToLower().Contains(queryParameters.ProductName.ToLower())); ;
+            }
+            if (!string.IsNullOrEmpty(queryParameters.storeLocation))
+            {
+                products = products.Where(
+                    p => p.StoreLocation.ToLower().Contains(queryParameters.storeLocation.ToLower())); ;
             }
             // Search multiple fields
             if (!string.IsNullOrEmpty(queryParameters.SearchProductOrLocation))
